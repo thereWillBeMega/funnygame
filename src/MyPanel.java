@@ -14,12 +14,14 @@ private int pY = 450;
     private int yVel;
     private int speed = 5;
 private int health = 5;
-
+private Image scaledImage;
 
 
     public MyPanel() {
         setBackground(new Color(0, 10, 77));
         setFocusable(true);
+        ImageIcon heart = new ImageIcon("images/heart.png");
+        scaledImage = heart.getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT);
     }//end of constructor
 
     public void paintComponent(Graphics g) {
@@ -32,14 +34,12 @@ g.setColor(Color.green);
 
         //delay
         try{
-            Thread.sleep(15);
+            Thread.sleep(10);
         }catch(InterruptedException e){
             System.out.println(e);
         }
-        ImageIcon heart = new ImageIcon("images/heart.png");
-
        for(int i = 0; i < health; i++){
-g.drawImage(heart.getImage(), i*100, 0, null);
+g.drawImage(scaledImage, i*75, 0, null);
        }
 
 this.addKeyListener(new KeyListener() {
@@ -66,7 +66,7 @@ this.addKeyListener(new KeyListener() {
         }
 
     }//end of keyPressed
-
+//thanks chat GPT for key Released and stoping ball from going off screen
     @Override
     public void keyReleased(KeyEvent e) {
         char key2 = e.getKeyChar();
@@ -83,6 +83,21 @@ this.addKeyListener(new KeyListener() {
     }
 
 });//end pf key listener
+
+        if (pX < 0) {
+            pX = 0;
+        } else if (pX > 1438 - 25) {
+            pX = 1438 - 25;
+        }
+
+        if (pY < 0) {
+            pY = 0;
+        } else if (pY > 850 - 25) {
+            pY = 850 - 25;
+        }
+
+
+
 
 //calls paint component
         repaint();
