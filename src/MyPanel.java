@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class MyPanel extends JPanel {
@@ -17,11 +20,19 @@ private int health = 5;
 private Image scaledImage;
 
 
+
     public MyPanel() {
         setBackground(new Color(0, 10, 77));
         setFocusable(true);
         ImageIcon heart = new ImageIcon("images/heart.png");
         scaledImage = heart.getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT);
+        ScheduledExecutorService bob = Executors.newScheduledThreadPool(1);
+
+        bob.scheduleAtFixedRate(() -> {
+
+        }, 500, 500, TimeUnit.MILLISECONDS);
+        bob.shutdown();
+
     }//end of constructor
 
     public void paintComponent(Graphics g) {
@@ -55,6 +66,9 @@ this.addKeyListener(new KeyListener() {
     public void keyPressed(KeyEvent e) {
 
         char key = e.getKeyChar();
+
+
+
         if(key == 'w'){
             yVel = -speed;
         }else if(key == 'a'){
@@ -95,6 +109,11 @@ this.addKeyListener(new KeyListener() {
         } else if (pY > 850 - 25) {
             pY = 850 - 25;
         }
+
+
+
+
+
 
 
 
