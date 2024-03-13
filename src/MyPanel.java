@@ -19,7 +19,7 @@ private int pY = 450;
 private int health = 5;
 private Image scaledImage;
 
-
+ArrayList<Projectile> porj = new ArrayList<>();
 
     public MyPanel() {
         setBackground(new Color(0, 10, 77));
@@ -28,10 +28,11 @@ private Image scaledImage;
         scaledImage = heart.getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT);
         ScheduledExecutorService bob = Executors.newScheduledThreadPool(1);
 
-        bob.scheduleAtFixedRate(() -> {
+        bob.schedule(() -> {
+porj.add(new Projectile(1,50,Color.RED,270,400,200));
+            System.out.println("it works!");
+        }, 500, TimeUnit.MILLISECONDS);
 
-        }, 500, 500, TimeUnit.MILLISECONDS);
-        bob.shutdown();
 
     }//end of constructor
 
@@ -53,6 +54,10 @@ g.setColor(Color.green);
 g.drawImage(scaledImage, i*75, 0, null);
        }
 
+       for(int i = 0; i < porj.size(); i++) {
+           porj.get(i).move(g);
+porj.get(i).paint(g);
+       }
 this.addKeyListener(new KeyListener() {
 
 
@@ -80,7 +85,7 @@ this.addKeyListener(new KeyListener() {
         }
 
     }//end of keyPressed
-//thanks chat GPT for key Released and stoping ball from going off screen
+//thanks chatGPT for key Released and stoping ball from going off screen
     @Override
     public void keyReleased(KeyEvent e) {
         char key2 = e.getKeyChar();
