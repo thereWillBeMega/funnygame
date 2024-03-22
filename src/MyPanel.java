@@ -11,13 +11,18 @@ import java.util.concurrent.TimeUnit;
 public class MyPanel extends JPanel {
 
 
-private int pX = 800;
-private int pY = 450;
+private double pX = 800;
+private double pY = 450;
     private int xVel;
     private int yVel;
     private int speed = 5;
 private int health = 5;
 private Image scaledImage;
+
+private double centerP;
+
+   private double distance;
+
 
 ArrayList<Projectile> porj = new ArrayList<>();
 
@@ -25,12 +30,13 @@ ArrayList<Projectile> porj = new ArrayList<>();
         setBackground(new Color(0, 10, 77));
         setFocusable(true);
         ImageIcon heart = new ImageIcon("images/heart.png");
+        centerP = pX-12.5;
+
         scaledImage = heart.getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT);
         ScheduledExecutorService bob = Executors.newScheduledThreadPool(1);
 
         bob.schedule(() -> {
-porj.add(new Projectile(1,50,Color.RED,270,400,200));
-            System.out.println("it works!");
+porj.add(new Projectile(3,50,Color.RED,90,400,200));
         }, 500, TimeUnit.MILLISECONDS);
 
 
@@ -39,10 +45,14 @@ porj.add(new Projectile(1,50,Color.RED,270,400,200));
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+
+
+
+
 pX += xVel;
 pY += yVel;
 g.setColor(Color.green);
-        g.fillOval(pX,pY,25,25);
+        g.fillOval((int)pX,(int)pY,25,25);
 
         //delay
         try{
@@ -57,6 +67,14 @@ g.drawImage(scaledImage, i*75, 0, null);
        for(int i = 0; i < porj.size(); i++) {
            porj.get(i).move(g);
 porj.get(i).paint(g);
+
+distance = porj.get(i).calcDis(pX,pY);
+
+if(distance < 12.5 + porj.get(i).getSize()/2){
+    health--;
+    porj.remove(i);
+}
+
        }
 this.addKeyListener(new KeyListener() {
 

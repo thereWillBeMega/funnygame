@@ -1,4 +1,4 @@
-//im gonna deplete my health
+//im gonna depletaae my health
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
