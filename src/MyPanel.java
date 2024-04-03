@@ -23,6 +23,10 @@ private double centerP;
 
    private double distance;
 
+   private int hitCD;
+
+   private int blink = 10;
+
 
 ArrayList<Projectile> porj = new ArrayList<>();
 
@@ -36,7 +40,20 @@ ArrayList<Projectile> porj = new ArrayList<>();
         ScheduledExecutorService bob = Executors.newScheduledThreadPool(1);
 
         bob.schedule(() -> {
-porj.add(new Projectile(3,50,Color.RED,90,400,200));
+for(int i = 0; i<20; i++)
+                porj.add(new Projectile(5, 25, Color.RED, i*18, 700, 100));
+
+            bob.schedule(() -> {
+                for(int i = 0; i<20; i++)
+                    porj.add(new Projectile(5, 25, Color.RED, i*18 + 10, 700, 100));
+
+                bob.schedule(() -> {
+                    for(int i = 0; i<20; i++)
+                        porj.add(new Projectile(5, 25, Color.RED, i*18, 700, 100));
+
+
+                }, 500, TimeUnit.MILLISECONDS);
+            }, 500, TimeUnit.MILLISECONDS);
         }, 500, TimeUnit.MILLISECONDS);
 
 
@@ -52,7 +69,16 @@ porj.add(new Projectile(3,50,Color.RED,90,400,200));
 pX += xVel;
 pY += yVel;
 g.setColor(Color.green);
-        g.fillOval((int)pX,(int)pY,25,25);
+if(blink > 3) {
+
+    g.fillOval((int) pX, (int) pY, 25, 25);
+
+}else if(blink <= 0){
+    blink = 10;
+}
+
+
+
 
         //delay
         try{
@@ -65,16 +91,25 @@ g.drawImage(scaledImage, i*75, 0, null);
        }
 
        for(int i = 0; i < porj.size(); i++) {
+           //checks if porjectile is off screen
+
+
            porj.get(i).move(g);
 porj.get(i).paint(g);
 
 distance = porj.get(i).calcDis(pX,pY);
 
 if(distance < 12.5 + porj.get(i).getSize()/2){
-    health--;
-    porj.remove(i);
+    if(hitCD < 1) {
+        health--;
+        porj.remove(i);
+        hitCD = 100;
+    }
 }
 
+           if(porj.get(i).getX()>1600 || porj.get(i).getX()<0 - porj.get(i).getSize()
+                   || porj.get(i).getY()>900 || porj.get(i).getY() < 0 - porj.get(i).getSize())
+            porj.remove(i);
        }
 this.addKeyListener(new KeyListener() {
 
@@ -138,9 +173,10 @@ this.addKeyListener(new KeyListener() {
 
 
 
-
-
-
+if(hitCD > 0) {
+    hitCD--;
+    blink--;
+}
 //calls paint component
         repaint();
     }//end of paint
@@ -150,3 +186,11 @@ this.addKeyListener(new KeyListener() {
 
 }//end of class
 
+
+
+//attacks
+
+//line, dodge by going between projectiles
+//for(int i = 0; i<15; i++) {
+//        porj.add(new Projectile(3, 50, Color.RED, 0, i*100, 200));
+//        }
