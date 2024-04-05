@@ -41,15 +41,15 @@ ArrayList<Projectile> porj = new ArrayList<>();
 
         bob.schedule(() -> {
 for(int i = 0; i<20; i++)
-                porj.add(new Projectile(5, 25, Color.RED, i*18, 700, 100));
+                porj.add(new Projectile(7, 25, Color.RED, i*18, 700, 100));
 
             bob.schedule(() -> {
                 for(int i = 0; i<20; i++)
-                    porj.add(new Projectile(5, 25, Color.RED, i*18 + 10, 700, 100));
+                    porj.add(new Projectile(7, 25, Color.RED, i*18 + 10, 700, 100));
 
                 bob.schedule(() -> {
                     for(int i = 0; i<20; i++)
-                        porj.add(new Projectile(5, 25, Color.RED, i*18, 700, 100));
+                        porj.add(new Projectile(7, 25, Color.RED, i*18, 700, 100));
 
 
                 }, 500, TimeUnit.MILLISECONDS);
