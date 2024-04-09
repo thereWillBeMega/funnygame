@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 public class MyPanel extends JPanel {
 
 
-private double pX = 800;
-private double pY = 450;
+private double pX = 700;
+private double pY = 600;
     private int xVel;
     private int yVel;
     private int speed = 5;
@@ -40,21 +40,49 @@ ArrayList<Projectile> porj = new ArrayList<>();
         ScheduledExecutorService bob = Executors.newScheduledThreadPool(1);
 
         bob.schedule(() -> {
+            //circles
 for(int i = 0; i<20; i++)
-                porj.add(new Projectile(7, 25, Color.RED, i*18, 700, 100));
-
+                porj.add(new Projectile(7, 30, Color.RED, i*18, 700, 200));
             bob.schedule(() -> {
                 for(int i = 0; i<20; i++)
-                    porj.add(new Projectile(7, 25, Color.RED, i*18 + 10, 700, 100));
-
+                    porj.add(new Projectile(7, 30, Color.RED, i*18 + 10, 700, 200));
                 bob.schedule(() -> {
                     for(int i = 0; i<20; i++)
-                        porj.add(new Projectile(7, 25, Color.RED, i*18, 700, 100));
+                        porj.add(new Projectile(7, 30, Color.RED, i*18, 700, 200));
 
+                    //falling lines
+                    bob.schedule(() -> {
+                        for(int i = 0; i<20; i++)
+                            porj.add(new Projectile(10, 20, Color.RED, 0, 80*i, 0));
+                        bob.schedule(() -> {
+                            for(int i = 0; i<20; i++)
+                                porj.add(new Projectile(10, 20, Color.RED, 0, 80*i+30, 0));
 
-                }, 500, TimeUnit.MILLISECONDS);
-            }, 500, TimeUnit.MILLISECONDS);
-        }, 500, TimeUnit.MILLISECONDS);
+                            //sans
+                            bob.schedule(() -> {
+                                for(int i = 0; i<30; i++)
+                                    porj.add(new Projectile(10, 30, Color.RED, 270, 1550, i*15));
+                                for(int i = 0; i<30; i++)
+                                    porj.add(new Projectile(10, 30, Color.RED, 90, 50, i*15+450));
+                                bob.schedule(() -> {
+                                    for(int i = 0; i<30; i++)
+                                        porj.add(new Projectile(10, 30, Color.RED, 270, 1550, i*15));
+                                    for(int i = 0; i<30; i++)
+                                        porj.add(new Projectile(10, 30, Color.RED, 90, 50, i*15+450));
+                                    bob.schedule(() -> {
+                                        for(int i = 0; i<30; i++)
+                                            porj.add(new Projectile(10, 30, Color.RED, 270, 1550, i*15));
+                                        for(int i = 0; i<30; i++)
+                                            porj.add(new Projectile(10, 30, Color.RED, 90, 50, i*15+450));
+
+                                    }, 900, TimeUnit.MILLISECONDS);
+                                }, 900, TimeUnit.MILLISECONDS);
+                            }, 2000, TimeUnit.MILLISECONDS);
+                        }, 1000, TimeUnit.MILLISECONDS);
+                    }, 2000, TimeUnit.MILLISECONDS);
+                }, 400, TimeUnit.MILLISECONDS);
+            }, 400, TimeUnit.MILLISECONDS);
+        }, 400, TimeUnit.MILLISECONDS);
 
 
     }//end of constructor
