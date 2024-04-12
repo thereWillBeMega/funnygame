@@ -52,34 +52,34 @@ for(int i = 0; i<20; i++)
 
                     //falling lines
                     bob.schedule(() -> {
-                        for(int i = 0; i<20; i++)
-                            porj.add(new Projectile(10, 20, Color.RED, 0, 80*i, 0));
+                        for(int i = 0; i<16; i++)
+                            porj.add(new Projectile(10, 15, Color.RED, 0, 100*i, 0));
                         bob.schedule(() -> {
-                            for(int i = 0; i<20; i++)
-                                porj.add(new Projectile(10, 20, Color.RED, 0, 80*i+30, 0));
+                            for(int i = 0; i<16; i++)
+                                porj.add(new Projectile(10, 15, Color.RED, 0, 100*i+30, 0));
 
                             //sans
                             bob.schedule(() -> {
                                 for(int i = 0; i<30; i++)
-                                    porj.add(new Projectile(10, 30, Color.RED, 270, 1550, i*15));
+                                    porj.add(new Projectile(12, 25, Color.RED, 270, 1550, i*15));
                                 for(int i = 0; i<30; i++)
-                                    porj.add(new Projectile(10, 30, Color.RED, 90, 50, i*15+450));
+                                    porj.add(new Projectile(12, 25, Color.RED, 90, 50, i*15+450));
                                 bob.schedule(() -> {
                                     for(int i = 0; i<30; i++)
-                                        porj.add(new Projectile(10, 30, Color.RED, 270, 1550, i*15));
+                                        porj.add(new Projectile(12, 25, Color.RED, 270, 1550, i*15));
                                     for(int i = 0; i<30; i++)
-                                        porj.add(new Projectile(10, 30, Color.RED, 90, 50, i*15+450));
+                                        porj.add(new Projectile(12, 25, Color.RED, 90, 50, i*15+450));
                                     bob.schedule(() -> {
                                         for(int i = 0; i<30; i++)
-                                            porj.add(new Projectile(10, 30, Color.RED, 270, 1550, i*15));
+                                            porj.add(new Projectile(12, 25, Color.RED, 270, 1550, i*15));
                                         for(int i = 0; i<30; i++)
-                                            porj.add(new Projectile(10, 30, Color.RED, 90, 50, i*15+450));
+                                            porj.add(new Projectile(12, 25, Color.RED, 90, 50, i*15+450));
 
                                     }, 900, TimeUnit.MILLISECONDS);
                                 }, 900, TimeUnit.MILLISECONDS);
-                            }, 2000, TimeUnit.MILLISECONDS);
+                            }, 1200, TimeUnit.MILLISECONDS);
                         }, 1000, TimeUnit.MILLISECONDS);
-                    }, 2000, TimeUnit.MILLISECONDS);
+                    }, 1000, TimeUnit.MILLISECONDS);
                 }, 400, TimeUnit.MILLISECONDS);
             }, 400, TimeUnit.MILLISECONDS);
         }, 400, TimeUnit.MILLISECONDS);
