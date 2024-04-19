@@ -28,56 +28,45 @@ private double centerP;
    private int blink = 10;
 
 
+  private  ImageIcon heart = new ImageIcon("images/heart.png");
+
 ArrayList<Projectile> porj = new ArrayList<>();
 
     public MyPanel() {
         setBackground(new Color(0, 10, 77));
         setFocusable(true);
-        ImageIcon heart = new ImageIcon("images/heart.png");
+
         centerP = pX-12.5;
+
 
         scaledImage = heart.getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT);
         ScheduledExecutorService bob = Executors.newScheduledThreadPool(1);
 
         bob.schedule(() -> {
             //circles
-for(int i = 0; i<20; i++)
-                porj.add(new Projectile(7, 30, Color.RED, i*18, 700, 200));
+circles(700,200,0);
             bob.schedule(() -> {
-                for(int i = 0; i<20; i++)
-                    porj.add(new Projectile(7, 30, Color.RED, i*18 + 10, 700, 200));
+                circles(700,200,10);
                 bob.schedule(() -> {
-                    for(int i = 0; i<20; i++)
-                        porj.add(new Projectile(7, 30, Color.RED, i*18, 700, 200));
-
+                    circles(700,200,20);
                     //falling lines
                     bob.schedule(() -> {
-                        for(int i = 0; i<16; i++)
-                            porj.add(new Projectile(10, 15, Color.RED, 0, 100*i, 0));
+                       fallingLines(0,0);
                         bob.schedule(() -> {
-                            for(int i = 0; i<16; i++)
-                                porj.add(new Projectile(10, 15, Color.RED, 0, 100*i+30, 0));
-
+                         fallingLines(0,50);
                             //sans
                             bob.schedule(() -> {
-                                for(int i = 0; i<30; i++)
-                                    porj.add(new Projectile(12, 25, Color.RED, 270, 1550, i*15));
-                                for(int i = 0; i<30; i++)
-                                    porj.add(new Projectile(12, 25, Color.RED, 90, 50, i*15+450));
+                             sansAttack(0);
                                 bob.schedule(() -> {
-                                    for(int i = 0; i<30; i++)
-                                        porj.add(new Projectile(12, 25, Color.RED, 270, 1550, i*15));
-                                    for(int i = 0; i<30; i++)
-                                        porj.add(new Projectile(12, 25, Color.RED, 90, 50, i*15+450));
+                                    sansAttack(0);
                                     bob.schedule(() -> {
-                                        for(int i = 0; i<30; i++)
-                                            porj.add(new Projectile(12, 25, Color.RED, 270, 1550, i*15));
-                                        for(int i = 0; i<30; i++)
-                                            porj.add(new Projectile(12, 25, Color.RED, 90, 50, i*15+450));
-
-                                    }, 900, TimeUnit.MILLISECONDS);
-                                }, 900, TimeUnit.MILLISECONDS);
-                            }, 1200, TimeUnit.MILLISECONDS);
+                                        sansAttack(1);
+                                        bob.schedule(() -> {
+                                            sansAttack(0);
+                                        }, 1000, TimeUnit.MILLISECONDS);
+                                    }, 1000, TimeUnit.MILLISECONDS);
+                                }, 1000, TimeUnit.MILLISECONDS);
+                            }, 1300, TimeUnit.MILLISECONDS);
                         }, 1000, TimeUnit.MILLISECONDS);
                     }, 1000, TimeUnit.MILLISECONDS);
                 }, 400, TimeUnit.MILLISECONDS);
@@ -86,6 +75,7 @@ for(int i = 0; i<20; i++)
 
 
     }//end of constructor
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -109,28 +99,43 @@ if(blink > 3) {
 
 
         //delay
-        try{
-            Thread.sleep(10);
-        }catch(InterruptedException e){
-            System.out.println(e);
-        }
+
        for(int i = 0; i < health; i++){
 g.drawImage(scaledImage, i*75, 0, null);
        }
 
        for(int i = 0; i < porj.size(); i++) {
-           //checks if porjectile is off screen
 
+Projectile p = porj.get(i);
+           double d = p.getDirection();
+p.move(g);
+p.paint(g);
 
-           porj.get(i).move(g);
-porj.get(i).paint(g);
+distance = p.calcDis(pX,pY);
 
-distance = porj.get(i).calcDis(pX,pY);
-
-if(distance < 12.5 + porj.get(i).getSize()/2){
+if(distance < 12.5 + p.getSize()/2){
     if(hitCD < 1) {
         health--;
-        porj.remove(i);
+        if(!p.getTough()) {
+            porj.remove(i);
+        }else{
+if(d == 0){
+pY -= yVel;
+pY -= p.getSpeed() + 1;
+}
+if(d == 90){
+    pX -= xVel;
+    pX += p.getSpeed() + 1;
+}
+if(d == 180){
+    pY -= yVel;
+    pY += p.getSpeed() + 1;
+}
+if(d == 270){
+    pX -= xVel;
+    pX -= p.getSpeed() + 1;
+}
+        }
         hitCD = 100;
     }
 }
@@ -139,6 +144,10 @@ if(distance < 12.5 + porj.get(i).getSize()/2){
                    || porj.get(i).getY()>900 || porj.get(i).getY() < 0 - porj.get(i).getSize())
             porj.remove(i);
        }
+
+
+
+
 this.addKeyListener(new KeyListener() {
 
 
@@ -205,20 +214,37 @@ if(hitCD > 0) {
     hitCD--;
     blink--;
 }
+
+        try{
+            Thread.sleep(10);
+        }catch(InterruptedException e){
+            System.out.println(e);
+        }
 //calls paint component
         repaint();
     }//end of paint
 
+    public void circles(int x, int y, int displacement){
+        for(int i = 0; i<20; i++)
+            porj.add(new Projectile(7, 30, Color.RED, i*18 + displacement, x, y,false));
 
+    }
+//direction = 0/1
+    public void fallingLines( int direction, int displacement){
+        for(int i = 0; i<16; i++)
+            porj.add(new Projectile(10, 15, Color.RED, direction * 180, 100*i + displacement, direction * 800,false));
+    }
 
+//direction = 0/1
+    public void sansAttack(int direction){
+
+        for(int i = 0; i<30; i++)
+            porj.add(new Projectile(12, 25, Color.RED, direction * 180 + 270, 1550 - direction * 1500, i*15,true));
+        for(int i = 0; i<30; i++)
+            porj.add(new Projectile(12, 25, Color.RED, direction * 180 + 90, 50 + direction * 1500, i*15+450,true));
+    }
 
 }//end of class
 
 
 
-//attacks
-
-//line, dodge by going between projectiles
-//for(int i = 0; i<15; i++) {
-//        porj.add(new Projectile(3, 50, Color.RED, 0, i*100, 200));
-//        }

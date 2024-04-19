@@ -14,16 +14,19 @@ private double yVel;
 
 private double center;
 
+private boolean tough;
 
 
 
-public Projectile(double speed, double size, Color color, double direction, double x, double y){
+
+public Projectile(double speed, double size, Color color, double direction, double x, double y, boolean tough){
 this.speed = speed;
 this.size = size;
 this.color = color;
 this.direction = direction;
 this.x = x;
 this.y = y;
+this.tough = tough;
 
 center = x-size/2;
 
@@ -54,8 +57,9 @@ return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2));
 public double getCenter(){
     return center;
 }
-
-
+    public double getDirection(){
+        return direction;
+    }
     public double getSize(){
         return size;
     }
@@ -65,6 +69,12 @@ public double getCenter(){
     }
     public double getY(){
         return y;
+    }
+    public double getSpeed(){
+        return speed;
+    }
+    public boolean getTough(){
+        return tough;
     }
 
 }
