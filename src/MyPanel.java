@@ -33,7 +33,7 @@ private double centerP;
 ArrayList<Projectile> porj = new ArrayList<>();
 
     public MyPanel() {
-        setBackground(new Color(0, 10, 77));
+        setBackground(new Color(0, 10, 140));
         setFocusable(true);
 
         centerP = pX-12.5;
@@ -84,8 +84,7 @@ circles(700,200,0);
 
 
 
-pX += xVel;
-pY += yVel;
+
 g.setColor(Color.green);
 if(blink > 3) {
 
@@ -98,12 +97,10 @@ if(blink > 3) {
 
 
 
-        //delay
-
        for(int i = 0; i < health; i++){
 g.drawImage(scaledImage, i*75, 0, null);
        }
-
+//projectile stuff
        for(int i = 0; i < porj.size(); i++) {
 
 Projectile p = porj.get(i);
@@ -114,27 +111,33 @@ p.paint(g);
 distance = p.calcDis(pX,pY);
 
 if(distance < 12.5 + p.getSize()/2){
+
+    if(p.getTough()) {
+        if (d == 0) {
+            pY -= yVel;
+            pY -= p.getSpeed() + 1;
+            System.out.println(p.getSpeed());
+        }
+        if (d == 90) {
+            pX -= xVel;
+            pX += p.getSpeed() + 1;
+            System.out.println(p.getSpeed());
+        }
+        if (d == 180) {
+            pY -= yVel;
+            pY += p.getSpeed() + 1;
+            System.out.println(p.getSpeed());
+        }
+        if (d == 270) {
+            pX -= xVel;
+            pX -= p.getSpeed() + 1;
+            System.out.println(p.getSpeed());
+        }
+    }
     if(hitCD < 1) {
         health--;
         if(!p.getTough()) {
             porj.remove(i);
-        }else{
-if(d == 0){
-pY -= yVel;
-pY -= p.getSpeed() + 1;
-}
-if(d == 90){
-    pX -= xVel;
-    pX += p.getSpeed() + 1;
-}
-if(d == 180){
-    pY -= yVel;
-    pY += p.getSpeed() + 1;
-}
-if(d == 270){
-    pX -= xVel;
-    pX -= p.getSpeed() + 1;
-}
         }
         hitCD = 100;
     }
@@ -147,7 +150,8 @@ if(d == 270){
 
 
 
-
+        pX += xVel;
+        pY += yVel;
 this.addKeyListener(new KeyListener() {
 
 
@@ -239,9 +243,9 @@ if(hitCD > 0) {
     public void sansAttack(int direction){
 
         for(int i = 0; i<30; i++)
-            porj.add(new Projectile(12, 25, Color.RED, direction * 180 + 270, 1550 - direction * 1500, i*15,true));
+            porj.add(new Projectile(12, 25, Color.BLACK, direction * 180 + 270, 1550 - direction * 1500, i*15,true));
         for(int i = 0; i<30; i++)
-            porj.add(new Projectile(12, 25, Color.RED, direction * 180 + 90, 50 + direction * 1500, i*15+450,true));
+            porj.add(new Projectile(12, 25, Color.BLACK, direction * 180 + 90, 50 + direction * 1500, i*15+450,true));
     }
 
 }//end of class
