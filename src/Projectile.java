@@ -15,11 +15,12 @@ private double yVel;
 private double center;
 
 private boolean tough;
+private int damage;
 
 
 
 
-public Projectile(double speed, double size, Color color, double direction, double x, double y, boolean tough){
+public Projectile(double speed, double size, Color color, double direction, double x, double y, boolean tough, int damage){
 this.speed = speed;
 this.size = size;
 this.color = color;
@@ -27,7 +28,7 @@ this.direction = direction;
 this.x = x;
 this.y = y;
 this.tough = tough;
-
+this.damage = damage;
 center = x-size/2;
 
 
@@ -44,6 +45,7 @@ public void paint(Graphics g){
 
 
 public void move(Graphics g){
+
     x+=xVel;
     y+=yVel;
 
@@ -76,5 +78,6 @@ public double getCenter(){
     public boolean getTough(){
         return tough;
     }
+    public int getDamage(){return damage;}
 
 }

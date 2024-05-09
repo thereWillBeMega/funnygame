@@ -11,10 +11,9 @@ public class Warning {
 
 
     public Warning(double x, double y, String type, int width, int height){
-this.x = x;
+        this.x = x;
         this.y = y;
         this.type = type;
-
         this.width = width;
         this.height = height;
     }
@@ -39,6 +38,15 @@ public void paint(Graphics g){
         g.fillRect((int)x, (int)y,10,height);
         g.fillRect((int)x + width - 10, (int)y,10,height);
         g.fillRect((int)x, (int)y + height - 10,width,10);
+    }else if(type.equals("gridT")){
+        g.setColor(Color.RED);
+        for(int i = 0; i<1600; i+= 100){
+            g.drawLine((int)x + i, 0, (int)x+i, 900);
+        }
+        for(int i = 0; i<900; i+=100){
+            g.drawLine(0, (int)y+i, 1600, (int)y+i);
+        }
+
     }
 
 }//end of paint
