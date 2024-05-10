@@ -101,6 +101,10 @@ circles(700,200,0,7,40);
                                                                     Aubry.schedule(() -> {
                                                                         circles(100,450,20,3,20);
                                                                         Aubry.schedule(() -> {
+                                                                        health += 2;
+                                                                        if(health > 6){
+                                                                            health = 6;
+                                                                        }
                                                                            clearPorj = true;
                                                                             warn = new Warning(0,0,"gridT",350,350);
                                                                             paintWarn = true;
@@ -116,8 +120,26 @@ circles(700,200,0,7,40);
                                                                                         Aubry.schedule(() -> {
                                                                                             spawnBullets = true;
                                                                                             Aubry.schedule(() -> {
-
-                                                                                            }, 1000, TimeUnit.MILLISECONDS);
+                                                                                                paintWarn = true;
+                                                                                                warn = new Warning(300,300,"circle",200,200);
+                                                                                                Aubry.schedule(() -> {
+                                                                                                    circles(400,400,0,10,20);
+                                                                                                    warn = new Warning(700,700,"circle",200,200);
+                                                                                                        Aubry.schedule(() -> {
+                                                                                                            circles(800,800,30,10,20);
+                                                                                                            warn = new Warning(700,200,"circle",200,200);
+                                                                                                            Aubry.schedule(() -> {
+                                                                                                                circles(800,300,70,10,20);
+                                                                                                                warn = new Warning(200,800,"circle",200,200);
+                                                                                                                Aubry.schedule(() -> {
+                                                                                                                    circles(300,800,70,10,20);
+                                                                                                                    spawnBullets = false;
+                                                                                                                    paintWarn = false;
+                                                                                                                }, 1000, TimeUnit.MILLISECONDS);
+                                                                                                            }, 1000, TimeUnit.MILLISECONDS);
+                                                                                                    }, 1000, TimeUnit.MILLISECONDS);
+                                                                                                }, 1000, TimeUnit.MILLISECONDS);
+                                                                                            }, 1500, TimeUnit.MILLISECONDS);
                                                                                         }, 700, TimeUnit.MILLISECONDS);
                                                                                     }, 700, TimeUnit.MILLISECONDS);
                                                                                 }, 700, TimeUnit.MILLISECONDS);
