@@ -141,6 +141,7 @@ circles(700,200,0,7,40);
                                                                                                                     paintWarn = false;
                                                                                                                     Aubry.schedule(() -> {
                                                                                                                         clearPorj = true;
+                                                                                                                        paintWarn = true;
                                                                                                                         warn = new Warning(600,300,"circle",200,200);
                                                                                                                         Aubry.schedule(() -> {
                                                                                                                             goofyBullets = 1;
