@@ -45,7 +45,6 @@ public void paint(Graphics g){
 
 
 public void move(Graphics g){
-
     x+=xVel;
     y+=yVel;
 
@@ -61,6 +60,11 @@ public double getCenter(){
 }
     public double getDirection(){
         return direction;
+    }
+    public void setDirection(double dur){
+        direction = Math.toRadians(dur);
+        xVel = Math.sin(direction) * speed;
+        yVel = Math.cos(direction) * speed;
     }
     public double getSize(){
         return size;

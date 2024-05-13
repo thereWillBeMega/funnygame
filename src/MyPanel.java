@@ -35,6 +35,8 @@ private boolean paintWarn = false;
 private boolean clearPorj = false;
 private int warnBlink = 3;
 private int bulletCD = 0;
+private int goofyBullets = -1;
+private int goofVal = 3;
   private  ImageIcon heart = new ImageIcon("images/heart.png");
     ScheduledExecutorService Aubry = Executors.newScheduledThreadPool(1);
 ArrayList<Projectile> porj = new ArrayList<>();
@@ -85,6 +87,7 @@ circles(700,200,0,7,40);
                                                     createSquare();
                                                     paintWarn = false;
                                                     Aubry.schedule(() -> {
+
                                                         circles(800,100,0,3,20);
                                                         circles(800,700,10,3,20);
                                                         circles(100,450,20,3,20);
@@ -119,6 +122,7 @@ circles(700,200,0,7,40);
                                                                                         paintWarn = false;
                                                                                         Aubry.schedule(() -> {
                                                                                             spawnBullets = true;
+
                                                                                             Aubry.schedule(() -> {
                                                                                                 paintWarn = true;
                                                                                                 warn = new Warning(300,300,"circle",200,200);
@@ -135,6 +139,26 @@ circles(700,200,0,7,40);
                                                                                                                     circles(300,800,70,10,20);
                                                                                                                     spawnBullets = false;
                                                                                                                     paintWarn = false;
+                                                                                                                    Aubry.schedule(() -> {
+                                                                                                                        clearPorj = true;
+                                                                                                                        warn = new Warning(600,300,"circle",200,200);
+                                                                                                                        Aubry.schedule(() -> {
+                                                                                                                            goofyBullets = 1;
+                                                                                                                            circles(700,400,0,10,20);
+                                                                                                                            Aubry.schedule(() -> {
+                                                                                                                                goofVal = -3;
+                                                                                                                                circles(700,400,30,10,20);
+                                                                                                                                Aubry.schedule(() -> {
+                                                                                                                                    goofVal = 3;
+                                                                                                                                    circles(700,400,60,10,20);
+                                                                                                                                    Aubry.schedule(() -> {
+                                                                                                                                        goofVal = -3;
+                                                                                                                                        circles(700,400,90,10,20);
+                                                                                                                                    }, 500, TimeUnit.MILLISECONDS);
+                                                                                                                                }, 500, TimeUnit.MILLISECONDS);
+                                                                                                                            }, 500, TimeUnit.MILLISECONDS);
+                                                                                                                        }, 500, TimeUnit.MILLISECONDS);
+                                                                                                                    }, 1000, TimeUnit.MILLISECONDS);
                                                                                                                 }, 1000, TimeUnit.MILLISECONDS);
                                                                                                             }, 1000, TimeUnit.MILLISECONDS);
                                                                                                     }, 1000, TimeUnit.MILLISECONDS);
@@ -242,6 +266,12 @@ if(distance < 12.5 + p.getSize()/2){
     }
 }
 
+           if(goofyBullets < 5 && goofyBullets > -1){
+               p.setDirection(Math.toDegrees(p.getDirection()) + goofVal);
+               System.out.println("cool");
+           }
+
+
            if(porj.get(i).getX()>1600 || porj.get(i).getX()<0 - porj.get(i).getSize()
                    || porj.get(i).getY()>900 || porj.get(i).getY() < 0 - porj.get(i).getSize())
             porj.remove(i);
@@ -263,6 +293,7 @@ if(spawnBullets){
     if(bulletCD <= 0){
         bulletCD = 4;
     }
+
 }
 
         pX += xVel;
@@ -341,6 +372,18 @@ if(clearPorj){
     porj.clear();
     clearPorj = false;
 }
+
+
+
+
+        if(goofyBullets > 0){
+            goofyBullets--;
+        }
+        if(goofyBullets == 0){
+            goofyBullets = 10;
+        }
+
+
         try{
             Thread.sleep(10);
         }catch(InterruptedException e){
@@ -407,6 +450,7 @@ for(int i = 0; i<35; i++){
             porj.add(new Projectile(30, 20, Color.RED, 270, 1579, y+i,false,1));
         }
     }
+
 
 }//end of class
 
