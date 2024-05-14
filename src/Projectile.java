@@ -17,10 +17,11 @@ private double center;
 private boolean tough;
 private int damage;
 
+private int goof;
 
 
 
-public Projectile(double speed, double size, Color color, double direction, double x, double y, boolean tough, int damage){
+public Projectile(double speed, double size, Color color, double direction, double x, double y, boolean tough, int damage, int goof){
 this.speed = speed;
 this.size = size;
 this.color = color;
@@ -30,7 +31,7 @@ this.y = y;
 this.tough = tough;
 this.damage = damage;
 center = x-size/2;
-
+this.goof = goof;
 
 direction = Math.toRadians(direction);
 xVel = Math.sin(direction) * speed;
@@ -83,5 +84,7 @@ public double getCenter(){
         return tough;
     }
     public int getDamage(){return damage;}
+    public int getGoof(){return goof;}
+
 
 }

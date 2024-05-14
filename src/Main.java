@@ -15,7 +15,6 @@ public class Main {
 
         frame.setSize(1600,900);
         frame.add(panel);
-
         frame.setVisible(true);
     }//end of main method
 }

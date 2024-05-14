@@ -35,8 +35,6 @@ private boolean paintWarn = false;
 private boolean clearPorj = false;
 private int warnBlink = 3;
 private int bulletCD = 0;
-private int goofyBullets = -1;
-private int goofVal = 3;
   private  ImageIcon heart = new ImageIcon("images/heart.png");
     ScheduledExecutorService Aubry = Executors.newScheduledThreadPool(1);
 ArrayList<Projectile> porj = new ArrayList<>();
@@ -51,17 +49,17 @@ ArrayList<Projectile> porj = new ArrayList<>();
         scaledImage = heart.getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT);
 
         paintWarn = true;
+        //schedule of all the attacks
         Aubry.schedule(() -> {
-            //circles
-circles(700,200,0,7,40);
+
+circles(700,200,0,7,40,0);
             Aubry.schedule(() -> {
-                circles(700,200,10,7,40);
+                circles(700,200,10,7,40,0);
                 paintWarn = false;
                 Aubry.schedule(() -> {
-                    circles(700,200,20,7,40);
+                    circles(700,200,20,7,40,0);
                     paintWarn = true;
                     warn = new Warning(-20,0,"rectangle",1600,100);
-                    //falling lines
                     Aubry.schedule(() -> {
                        fallingLines(0,0);
                         paintWarn = false;
@@ -69,7 +67,6 @@ circles(700,200,0,7,40);
                          fallingLines(0,30);
                             paintWarn = true;
                             warn = new Warning(-20,400,"good",1600,100);
-                            //sans
                             Aubry.schedule(() -> {
                              sansAttack(0,11);
                              paintWarn = false;
@@ -88,21 +85,21 @@ circles(700,200,0,7,40);
                                                     paintWarn = false;
                                                     Aubry.schedule(() -> {
 
-                                                        circles(800,100,0,3,20);
-                                                        circles(800,700,10,3,20);
-                                                        circles(100,450,20,3,20);
-                                                        circles(1300,450,30,3,20);
+                                                        circles(800,100,0,3,20,0);
+                                                        circles(800,700,10,3,20,0);
+                                                        circles(100,450,20,3,20,0);
+                                                        circles(1300,450,30,3,20,0);
                                                         Aubry.schedule(() -> {
-                                                            circles(100,100,0,3,20);
-                                                            circles(1500,100,10,3,20);
-                                                            circles(100,800,20,3,20);
-                                                            circles(1500,800,30,3,20);
+                                                            circles(100,100,0,3,20,0);
+                                                            circles(1500,100,10,3,20,0);
+                                                            circles(100,800,20,3,20,0);
+                                                            circles(1500,800,30,3,20,0);
                                                             Aubry.schedule(() -> {
-                                                                circles(800,100,0,3,20);
+                                                                circles(800,100,0,3,20,0);
                                                                 Aubry.schedule(() -> {
-                                                                    circles(800,700,10,3,20);
+                                                                    circles(800,700,10,3,20,0);
                                                                     Aubry.schedule(() -> {
-                                                                        circles(100,450,20,3,20);
+                                                                        circles(100,450,20,3,20,0);
                                                                         Aubry.schedule(() -> {
                                                                         health += 2;
                                                                         if(health > 6){
@@ -127,38 +124,41 @@ circles(700,200,0,7,40);
                                                                                                 paintWarn = true;
                                                                                                 warn = new Warning(300,300,"circle",200,200);
                                                                                                 Aubry.schedule(() -> {
-                                                                                                    circles(400,400,0,10,20);
+                                                                                                    circles(400,400,0,10,20,0);
                                                                                                     warn = new Warning(700,700,"circle",200,200);
                                                                                                         Aubry.schedule(() -> {
-                                                                                                            circles(800,800,30,10,20);
+                                                                                                            circles(800,800,30,10,20,0);
                                                                                                             warn = new Warning(700,200,"circle",200,200);
                                                                                                             Aubry.schedule(() -> {
-                                                                                                                circles(800,300,70,10,20);
-                                                                                                                warn = new Warning(200,800,"circle",200,200);
+                                                                                                                circles(800,300,70,10,20,0);
+                                                                                                                warn = new Warning(300,300,"circle",200,200);
                                                                                                                 Aubry.schedule(() -> {
-                                                                                                                    circles(300,800,70,10,20);
+                                                                                                                    circles(400,400,70,10,20,0);
                                                                                                                     spawnBullets = false;
                                                                                                                     paintWarn = false;
                                                                                                                     Aubry.schedule(() -> {
                                                                                                                         clearPorj = true;
                                                                                                                         paintWarn = true;
-                                                                                                                        warn = new Warning(600,300,"circle",200,200);
+                                                                                                                        warn = new Warning(600,325,"circle",200,200);
                                                                                                                         Aubry.schedule(() -> {
-                                                                                                                            goofyBullets = 1;
-                                                                                                                            circles(700,400,0,10,20);
+                                                                                                                            circles(700,412,0,10,70,3);
                                                                                                                             Aubry.schedule(() -> {
-                                                                                                                                goofVal = -3;
-                                                                                                                                circles(700,400,30,10,20);
+                                                                                                                                circles(700,412,30,10,25,-3);
                                                                                                                                 Aubry.schedule(() -> {
-                                                                                                                                    goofVal = 3;
-                                                                                                                                    circles(700,400,60,10,20);
+                                                                                                                                    circles(700,412,60,10,70,3);
                                                                                                                                     Aubry.schedule(() -> {
-                                                                                                                                        goofVal = -3;
-                                                                                                                                        circles(700,400,90,10,20);
-                                                                                                                                    }, 500, TimeUnit.MILLISECONDS);
-                                                                                                                                }, 500, TimeUnit.MILLISECONDS);
-                                                                                                                            }, 500, TimeUnit.MILLISECONDS);
-                                                                                                                        }, 500, TimeUnit.MILLISECONDS);
+                                                                                                                                        circles(700,412,90,10,25,-3);
+                                                                                                                                        paintWarn = false;
+                                                                                                                                        Aubry.schedule(() -> {
+                                                                                                                                            circles(700,412,110,10,70,3);
+                                                                                                                                            Aubry.schedule(() -> {
+                                                                                                                                                circles(700,412,140,10,25,-3);
+                                                                                                                                            }, 300, TimeUnit.MILLISECONDS);
+                                                                                                                                        }, 300, TimeUnit.MILLISECONDS);
+                                                                                                                                    }, 300, TimeUnit.MILLISECONDS);
+                                                                                                                                }, 300, TimeUnit.MILLISECONDS);
+                                                                                                                            }, 300, TimeUnit.MILLISECONDS);
+                                                                                                                        }, 300, TimeUnit.MILLISECONDS);
                                                                                                                     }, 1000, TimeUnit.MILLISECONDS);
                                                                                                                 }, 1000, TimeUnit.MILLISECONDS);
                                                                                                             }, 1000, TimeUnit.MILLISECONDS);
@@ -217,7 +217,7 @@ if(health > 0) {
         blink = 10;
     }
 }else{
-    Aubry.shutdown();
+    Aubry.shutdownNow();
 }
 
 
@@ -232,6 +232,10 @@ Projectile p = porj.get(i);
            double d = p.getDirection();
 p.move(g);
 p.paint(g);
+
+           if(p.getGoof() > 0){
+               p.setDirection(Math.toDegrees(p.getDirection()) + p.getGoof());
+           }
 
 distance = p.calcDis(pX,pY);
 
@@ -267,10 +271,7 @@ if(distance < 12.5 + p.getSize()/2){
     }
 }
 
-           if(goofyBullets < 5 && goofyBullets > -1){
-               p.setDirection(Math.toDegrees(p.getDirection()) + goofVal);
-               System.out.println("cool");
-           }
+
 
 
            if(porj.get(i).getX()>1600 || porj.get(i).getX()<0 - porj.get(i).getSize()
@@ -282,13 +283,13 @@ if(spawnBullets){
     if(bulletCD > 2) {
         ranDir = (int) (Math.random() * 4);
         if (ranDir == 0) {
-            porj.add(new Projectile(3, 30, Color.RED, 180, (int) (Math.random() * 1570), 870, false, 1));
+            porj.add(new Projectile(3, 30, Color.RED, 180, (int) (Math.random() * 1570), 870, false, 1,0));
         } else if (ranDir == 1) {
-            porj.add(new Projectile(3, 30, Color.RED, 90, 0, (int) (Math.random() * 870), false, 1));
+            porj.add(new Projectile(3, 30, Color.RED, 90, 0, (int) (Math.random() * 870), false, 1,0));
         } else if (ranDir == 2) {
-            porj.add(new Projectile(3, 30, Color.RED, 0, (int) (Math.random() * 1570), 0, false, 1));
+            porj.add(new Projectile(3, 30, Color.RED, 0, (int) (Math.random() * 1570), 0, false, 1,0));
         } else if (ranDir == 3) {
-            porj.add(new Projectile(3, 30, Color.RED, 270, 1570, (int) (Math.random() * 870), false, 1));
+            porj.add(new Projectile(3, 30, Color.RED, 270, 1570, (int) (Math.random() * 870), false, 1,0));
         }
     }
     if(bulletCD <= 0){
@@ -377,12 +378,7 @@ if(clearPorj){
 
 
 
-        if(goofyBullets > 0){
-            goofyBullets--;
-        }
-        if(goofyBullets == 0){
-            goofyBullets = 10;
-        }
+
 
 
         try{
@@ -394,34 +390,34 @@ if(clearPorj){
         repaint();
     }//end of paint
 
-    public void circles(int x, int y, int displacement, int speed,int size){
+    public void circles(int x, int y, int displacement, int speed,int size,int goofy){
         for(int i = 0; i<20; i++)
-            porj.add(new Projectile(speed, size, Color.RED, i*18 + displacement, x, y,false,1));
+            porj.add(new Projectile(speed, size, Color.RED, i*18 + displacement, x, y,false,1,goofy));
 
     }
 //direction = 0/1
     public void fallingLines( int direction, int displacement){
         for(int i = 0; i<16; i++)
-            porj.add(new Projectile(13, 17, Color.RED, direction * 180, 100*i + displacement, direction * 800,false,1));
+            porj.add(new Projectile(13, 17, Color.RED, direction * 180, 100*i + displacement, direction * 800,false,1,0));
     }
 
 //direction = 0/1
     public void sansAttack(int direction, int speed){
 
         for(int i = 0; i<31; i++)
-            porj.add(new Projectile(speed, 25, Color.RED, direction * 180 + 270, 1550 - direction * 1500, i*15,false,1));
+            porj.add(new Projectile(speed, 25, Color.RED, direction * 180 + 270, 1550 - direction * 1500, i*15,false,1,0));
         for(int i = 0; i<30; i++)
-            porj.add(new Projectile(speed, 25, Color.RED, direction * 180 + 90, 50 + direction * 1500, i*15+450,false,1));
+            porj.add(new Projectile(speed, 25, Color.RED, direction * 180 + 90, 50 + direction * 1500, i*15+450,false,1,0));
     }
 
     public void fullScreenPush(){
         for(int i = 0; i<16; i++){
-            porj.add(new Projectile(7.5, 100, Color.BLACK, 0, i*100, 0,true,0));
-            porj.add(new Projectile(12, 100, Color.BLACK, 180, i*100, 800,true,0));
+            porj.add(new Projectile(7.5, 100, Color.BLACK, 0, i*100, 0,true,0,0));
+            porj.add(new Projectile(12, 100, Color.BLACK, 180, i*100, 800,true,0,0));
         }
         for(int i = 0; i<9; i++){
-            porj.add(new Projectile(25, 100, Color.BLACK, 270, 1500, i*100,true,0));
-            porj.add(new Projectile(20, 100, Color.BLACK, 90, 0, i*100,true,0));
+            porj.add(new Projectile(25, 100, Color.BLACK, 270, 1500, i*100,true,0,0));
+            porj.add(new Projectile(20, 100, Color.BLACK, 90, 0, i*100,true,0,0));
         }
     }
 
@@ -434,21 +430,21 @@ if(clearPorj){
             System.out.println(e);
         }
 for(int i = 0; i<35; i++){
-    porj.add(new Projectile(0, 20, Color.BLACK, 90, 575, i*10 + 225,true,0));
-    porj.add(new Projectile(0, 20, Color.BLACK, 270, 575+340, i*10 + 225,true,0));
-    porj.add(new Projectile(0, 20, Color.BLACK, 0, 575 + i*10, 225,true,0));
-    porj.add(new Projectile(0, 20, Color.BLACK, 180, 575 + i*10, 225 + 340,true,0));
+    porj.add(new Projectile(0, 20, Color.BLACK, 90, 575, i*10 + 225,true,0,0));
+    porj.add(new Projectile(0, 20, Color.BLACK, 270, 575+340, i*10 + 225,true,0,0));
+    porj.add(new Projectile(0, 20, Color.BLACK, 0, 575 + i*10, 225,true,0,0));
+    porj.add(new Projectile(0, 20, Color.BLACK, 180, 575 + i*10, 225 + 340,true,0,0));
 }
     }//end of square
 
     public void grid(int x, int y){
         for(int i = 0; i<1600; i+= 100){
-            porj.add(new Projectile(20, 20, Color.RED, 180, x+i, 879,false,1));
-            porj.add(new Projectile(20, 20, Color.RED, 0, x+i, 0,false,1));
+            porj.add(new Projectile(20, 20, Color.RED, 180, x+i, 879,false,1,0));
+            porj.add(new Projectile(20, 20, Color.RED, 0, x+i, 0,false,1,0));
         }
         for(int i = 0; i<900; i+=100){
-            porj.add(new Projectile(30, 20, Color.RED, 90, 0, y+i,false,1));
-            porj.add(new Projectile(30, 20, Color.RED, 270, 1579, y+i,false,1));
+            porj.add(new Projectile(30, 20, Color.RED, 90, 0, y+i,false,1,0));
+            porj.add(new Projectile(30, 20, Color.RED, 270, 1579, y+i,false,1,0));
         }
     }
 
